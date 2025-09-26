@@ -17,6 +17,8 @@ import resetStyles from '~/styles/reset.css?url';
 import appStyles from '~/styles/app.css?url';
 import tailwindCss from './styles/tailwind.css?url';
 import {PageLayout} from './components/PageLayout';
+import {storyblokInit, apiPlugin} from '@storyblok/react';
+import {StoryblokPage} from './storyblok/page';
 
 export type RootLoader = typeof loader;
 
@@ -93,6 +95,15 @@ export async function loader(args: LoaderFunctionArgs) {
     },
   };
 }
+
+const components = {
+  page: StoryblokPage,
+};
+storyblokInit({
+  accessToken: 'ADD_A_STORYBLOK_ACCESS_TOKEN_HERE', // Use an environment variable instead
+  use: [apiPlugin],
+  components,
+});
 
 /**
  * Load data necessary for rendering content above the fold. This is the critical data

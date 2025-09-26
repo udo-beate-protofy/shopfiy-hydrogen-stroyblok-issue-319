@@ -7,6 +7,11 @@ import type {
   RecommendedProductsQuery,
 } from 'storefrontapi.generated';
 import {ProductItem} from '~/components/ProductItem';
+import {
+  getStoryblokApi,
+  StoryblokComponent,
+  useStoryblokState,
+} from '@storyblok/react';
 
 export const meta: MetaFunction = () => {
   return [{title: 'Hydrogen | Home'}];
@@ -27,13 +32,17 @@ export async function loader(args: LoaderFunctionArgs) {
  * needed to render the page. If it's unavailable, the whole page should 400 or 500 error.
  */
 async function loadCriticalData({context}: LoaderFunctionArgs) {
-  const [{collections}] = await Promise.all([
+  const [{collections}, {data}] = await Promise.all([
     context.storefront.query(FEATURED_COLLECTION_QUERY),
     // Add other queries here, so that they are loaded in parallel
+    await getStoryblokApi().get('cdn/stories/de/', {
+      version: 'draft',
+    }),
   ]);
 
   return {
     featuredCollection: collections.nodes[0],
+    story: data.story,
   };
 }
 
@@ -58,10 +67,12 @@ function loadDeferredData({context}: LoaderFunctionArgs) {
 
 export default function Homepage() {
   const data = useLoaderData<typeof loader>();
+  const story = useStoryblokState(data.story);
   return (
     <div className="home">
       <FeaturedCollection collection={data.featuredCollection} />
       <RecommendedProducts products={data.recommendedProducts} />
+      {story && <StoryblokComponent blok={story.content} />}
     </div>
   );
 }

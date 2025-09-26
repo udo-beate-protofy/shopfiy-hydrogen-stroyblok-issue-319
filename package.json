@@ -10,12 +10,14 @@
     "preview": "shopify hydrogen preview --build",
     "lint": "eslint --no-error-on-unmatched-pattern .",
     "typecheck": "tsc --noEmit",
-    "codegen": "shopify hydrogen codegen"
+    "codegen": "shopify hydrogen codegen",
+    "storyblok:generate-types": "storyblok components pull --space 286927516797605 && storyblok types generate -s 286927516797605"
   },
   "prettier": "@shopify/prettier-config",
   "dependencies": {
     "@shopify/hydrogen": "2025.5.0",
     "@shopify/remix-oxygen": "^3.0.0",
+    "@storyblok/react": "^5.4.12",
     "graphql": "^16.10.0",
     "graphql-tag": "^2.12.6",
     "isbot": "^5.1.22",
@@ -23,6 +25,7 @@
     "react-dom": "^18.2.0",
     "react-router": "7.6.0",
     "react-router-dom": "7.6.0",
+    "storyblok": "^4.6.4",
     "tailwindcss": "^4.1.6"
   },
   "devDependencies": {

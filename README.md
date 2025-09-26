@@ -1,45 +1,67 @@
-# Hydrogen template: Skeleton
+# About
 
-Hydrogen is Shopify’s stack for headless commerce. Hydrogen is designed to dovetail with [Remix](https://remix.run/), Shopify’s full stack web framework. This template contains a **minimal setup** of components, queries and tooling to get started with Hydrogen.
+This is a reproduction repo for https://github.com/storyblok/monoblok/issues/319
 
-[Check out Hydrogen docs](https://shopify.dev/custom-storefronts/hydrogen)
-[Get familiar with Remix](https://remix.run/docs/en/v1)
+## Setup / run
 
-## What's included
+1. Replace the `ADD_A_STORYBLOK_ACCESS_TOKEN_HERE` in [root.tsx (Line #103)](./app/root.tsx) with an storyblok access token
 
-- Remix
-- Hydrogen
-- Oxygen
-- Vite
-- Shopify CLI
-- ESLint
-- Prettier
-- GraphQL generator
-- TypeScript and JavaScript flavors
-- Minimal setup of components and routes
+2. change the cdn (`cdn/stories/de/`) path to an existing storyblok page [\_index.tsx](app/routes/_index.tsx)
 
-## Getting started
+3. run `nvm use && npm i`
+4. run `npm run dev`
+5. open http://localhost:3000/ and refresh the page 6 Times, you should see an error like:
 
-**Requirements:**
+```
+Error: The Workers runtime canceled this request because it detected that your Worker's code had hung and would never generate a response. Refer to: https://developers.cloudflare.com/workers/observability/errors/
+  at async Object.fetch (file:///.../node_modules/miniflare/dist/src/workers/core/entry.worker.js:1029:22)
+```
 
-- Node.js version 18.0.0 or higher
+## Steps done before
+
+### Init hydrogen (create project)
+
+I used the following command to setup the project (you can see the result as the init command)
 
 ```bash
 npm create @shopify/hydrogen@latest
 ```
 
-## Building for production
+These are the options i used:
 
-```bash
-npm run build
+```text
+> npx
+> "create-hydrogen"
+
+?  Connect to Shopify:
+✔  Use sample data from mock.shop (You can connect a Shopify account later)
+
+?  Where would you like to create your storefront?
+✔  hydrogen-storefront
+
+?  Select a language:
+✔  TypeScript
+
+?  Select a styling library:
+✔  Tailwind v4
+
+?  Install dependencies with npm?
+✔  Yes
+
+╭─ success ────────────────────────────────────────────────────────────────────╮
+│                                                                              │
+│  hydrogen-storefront is ready to build.                                      │
+│                                                                              │
+╰──────────────────────────────────────────────────────────────────────────────╯
+
+?  Do you want to scaffold routes and core functionality?
+✔  Yes, set up now
+
+?  Select a URL structure to support multiple markets:
+✔  Subdomains (de.example.com/...)
+
 ```
 
-## Local development
+### Use the storyblok docu
 
-```bash
-npm run dev
-```
-
-## Setup for using Customer Account API (`/account` section)
-
-Follow step 1 and 2 of <https://shopify.dev/docs/custom-storefronts/building-with-the-customer-account-api/hydrogen#step-1-set-up-a-public-domain-for-local-development>
+I followed this documentation: https://www.storyblok.com/tp/headless-commerce-with-shopify-hydrogen-and-storyblok and implement only the part of requestion a storyblok page
